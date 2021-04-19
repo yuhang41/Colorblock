@@ -32,7 +32,6 @@
             background-color: white;
             border-radius: 8px;
             padding: 16px;
-
             display: flex;
             flex-wrap: wrap;
         }
@@ -55,14 +54,50 @@
     <script>
         var GamePanel = document.querySelector('.game-panel')
         var level = 1
+        let n = 2 
+        let opacity=0
         newGame()
 
         function newGame() {
             // 產生方塊
             // 調整方塊數量大小
+            let block = n * n
+            let color = showRandom(255)
+            let bkRGB = `rgb(${showRandom(255)},${showRandom(255)},${showRandom(255)})`
+
+            for(let i =1; i<= block ;i++){
+                GamePanel.innerHTML+=`
+                    <div class="box"></div>
+                `
+            }
+            let boxs = document.querySelectorAll('.box')
+            let randomBox =showRandom(boxs.length)
+            boxs.forEach(box=>{
+            //box.style.background = `rgb(${color},${color},${color})`
+                box.style.background = bkRGB
+                box.style.width = `calc(100% / ${n})`
+                box.style.height = `calc(100% / ${n})`
+                box.onclick =()=>{
+                    if(boxs[randomBox] != box){
+                        alert('錯喽')
+                    }
+                }
+            })
             // 產生一個隨機顏色，賦予方塊
-
-
+            
+            boxs[randomBox].style.opacity = 0.5 + opacity
+            boxs[randomBox].onclick = ()=>{
+                level ++
+                n++
+                GamePanel.innerHTML =``
+                boxs[randomBox].style.opacity = 1
+                opacity += 0.05
+                if(level != 10){
+                    newGame()
+                }else{
+                    alert('恭喜過關')
+                }
+            }
             // 隨機產生正解方塊
 
 
@@ -72,6 +107,9 @@
             // 幫正解方塊加上onclick事件
             // 當玩家按到這個方塊(正解)的時候，開啟下一關
             // 如果level = 10 的時候顯示過關，並重置遊戲
+        }
+        function showRandom(max){
+            return Math.floor(Math.random() * max)
         }
     </script>
 </body>
