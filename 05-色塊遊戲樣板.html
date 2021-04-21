@@ -63,6 +63,7 @@
             // 調整方塊數量大小
             let block = n * n
             let color = showRandom(255)
+            // 產生一個隨機顏色，賦予方塊
             let bkRGB = `rgb(${showRandom(255)},${showRandom(255)},${showRandom(255)})`
 
             for(let i =1; i<= block ;i++){
@@ -83,9 +84,11 @@
                     }
                 }
             })
-            // 產生一個隨機顏色，賦予方塊
             
+            // 隨機產生正解方塊
+            // 正解方塊透明度調整
             boxs[randomBox].style.opacity = 0.5 + opacity
+            // 幫正解方塊加上onclick事件
             boxs[randomBox].onclick = ()=>{
                 level ++
                 n++
@@ -93,23 +96,22 @@
                 boxs[randomBox].style.opacity = 1
                 opacity += 0.05
                 if(level != 10){
+                    // 當玩家按到這個方塊(正解)的時候，開啟下一關
                     newGame()
                 }else{
+                    // 如果level = 10 的時候顯示過關，並重置遊戲
                     alert('恭喜過關')
+                    again()
                 }
             }
-            // 隨機產生正解方塊
-
-
-            // 正解方塊透明度調整
-
-
-            // 幫正解方塊加上onclick事件
-            // 當玩家按到這個方塊(正解)的時候，開啟下一關
-            // 如果level = 10 的時候顯示過關，並重置遊戲
         }
         function showRandom(max){
             return Math.floor(Math.random() * max)
+        }
+        function again(){
+            if(confirm('你還要再玩一次嗎?')){
+                window.location.reload()
+            }
         }
     </script>
 </body>
